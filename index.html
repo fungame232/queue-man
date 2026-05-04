@@ -727,6 +727,33 @@ setInterval(()=>{
 }, 5000);
 
 // ===== INIT =====
+// ===== ADD THIS =====
+document.getElementById("queueForm")?.addEventListener("submit", async function(e) {
+  e.preventDefault();
+
+  const name = document.getElementById("name")?.value;
+  const phone = document.getElementById("phone")?.value;
+  const service = document.getElementById("service")?.value;
+
+  try {
+    const res = await fetch("http://localhost:5000/add-token", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ name, phone, service })
+    });
+
+    const data = await res.json();
+
+    alert("Token Number: " + data.token.tokenNumber);
+  } catch (err) {
+    console.error(err);
+    alert("Error connecting to backend");
+  }
+});
+
+// ===== INIT =====
 renderBarChart();
 renderQueueDisplay();
 renderAdmin();
